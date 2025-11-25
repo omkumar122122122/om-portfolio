@@ -1,5 +1,4 @@
 // DOM Elements
-const themeToggle = document.getElementById('theme-toggle');
 const body = document.body;
 const header = document.querySelector('.header');
 const burger = document.querySelector('.burger');
@@ -14,22 +13,62 @@ const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
 // Apply theme on page load
 if (savedTheme === 'dark' || (!savedTheme && prefersDarkScheme.matches)) {
     body.classList.add('dark-theme');
-    themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
 } else {
-    themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+    body.classList.remove('dark-theme');
 }
 
-// Theme Toggle
-themeToggle.addEventListener('click', () => {
-    body.classList.toggle('dark-theme');
+// Initialize theme toggle after DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    const themeToggle = document.getElementById('theme-toggle');
     
-    if (body.classList.contains('dark-theme')) {
-        themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-        localStorage.setItem('theme', 'dark');
-    } else {
-        themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
-        localStorage.setItem('theme', 'light');
+    // Set initial theme toggle icon
+    if (themeToggle) {
+        if (body.classList.contains('dark-theme')) {
+            themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        } else {
+            themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+        }
+        
+        // Theme Toggle
+        themeToggle.addEventListener('click', () => {
+            // Add transition effect
+            body.style.transition = 'background-color 0.3s ease, color 0.3s ease';
+            
+            body.classList.toggle('dark-theme');
+            
+            // Update icon based on current theme
+            if (body.classList.contains('dark-theme')) {
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+                localStorage.setItem('theme', 'dark');
+            } else {
+                themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+                localStorage.setItem('theme', 'light');
+            }
+            
+            // Remove transition after animation completes
+            setTimeout(() => {
+                body.style.transition = '';
+            }, 300);
+        });
     }
+    
+    // Set initial state for skill bars
+    progressBars.forEach(bar => {
+        bar.style.width = '0';
+    });
+    
+    // Trigger animations for elements already in view
+    setTimeout(() => {
+        document.querySelectorAll('section').forEach(section => {
+            const rect = section.getBoundingClientRect();
+            if (rect.top < window.innerHeight && rect.bottom >= 0) {
+                if (section.classList.contains('about')) {
+                    animateSkillBars();
+                }
+                section.classList.add('animated');
+            }
+        });
+    }, 100);
 });
 
 // Mobile Navigation Toggle
@@ -125,24 +164,3 @@ if (contactForm) {
         contactForm.reset();
     });
 }
-
-// Initialize animations on page load
-document.addEventListener('DOMContentLoaded', () => {
-    // Set initial state for skill bars
-    progressBars.forEach(bar => {
-        bar.style.width = '0';
-    });
-    
-    // Trigger animations for elements already in view
-    setTimeout(() => {
-        document.querySelectorAll('section').forEach(section => {
-            const rect = section.getBoundingClientRect();
-            if (rect.top < window.innerHeight && rect.bottom >= 0) {
-                if (section.classList.contains('about')) {
-                    animateSkillBars();
-                }
-                section.classList.add('animated');
-            }
-        });
-    }, 100);
-});
