@@ -183,6 +183,7 @@ body.dark-theme .theme-toggle {
 .logo h2 {
   font-size: 1.8rem;
   color: var(--primary-color);
+  margin-left: 20px;
 }
 
 .logo span {
@@ -233,8 +234,7 @@ body.dark-theme .theme-toggle {
 .burger {
   display: none;
   cursor: pointer;
-  margin-left: 20px;
-  z-index: 1001; /* Ensure it's above other elements */
+  z-index: 1001;
   position: relative;
 }
 
@@ -772,8 +772,8 @@ body.dark-theme .theme-toggle {
     background: var(--card-background);
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
-    padding-top: 100px;
+    justify-content: center;
+    padding-top: 80px;
     transition: var(--transition);
     box-shadow: var(--shadow);
     z-index: 1000;
@@ -794,6 +794,7 @@ body.dark-theme .theme-toggle {
   }
   
   .nav-links li:last-child {
+    margin-right: 0;
     margin-bottom: 40px;
   }
   
@@ -801,6 +802,7 @@ body.dark-theme .theme-toggle {
     display: block;
     position: relative;
     z-index: 1001;
+    margin-right: 20px;
   }
   
   /* Adjust theme toggle position for mobile */
@@ -809,7 +811,7 @@ body.dark-theme .theme-toggle {
     right: 15px;
     width: 45px;
     height: 45px;
-    z-index: 1002; /* Ensure it's above the mobile menu */
+    z-index: 1002;
   }
   
   .profile-image-container {
